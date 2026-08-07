@@ -9,15 +9,11 @@ services:
     networks:
      # Connect to the 'traefik_proxy' overlay network for inter-container communication across nodes
       - proxy
-
     ports:
       - "80:80"
       - "443:443"
-
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro,z
-      - ./dynamic:/dynamic:ro
-
     command:
       # EntryPoints
       - "--entrypoints.web.address=:80"
@@ -43,7 +39,9 @@ services:
       - "--log.level=INFO"
       - "--accesslog=true"
       - "--metrics.prometheus=true"
-
+    configs:
+      - source: traefik_tls_config
+        target: /dynamic/tls.yml
   # Traefik Dynamic configuration via Docker labels
     labels:
       # Enable self‑routing
