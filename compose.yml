@@ -58,3 +58,10 @@ services:
 networks:
   proxy:
     name: proxy
+
+configs:
+  traefik_config: |
+    tls:
+      certificates:
+        - certFile: /home/user/certs/local.crt
+          keyFile:  /home/user/certs/local.key
