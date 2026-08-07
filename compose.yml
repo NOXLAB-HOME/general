@@ -3,9 +3,6 @@ services:
     image: traefik:v3.7
     container_name: traefik
     restart: unless-stopped
-    user: "0:0"
-    security_opt:
-      - no-new-privileges:true
 
     networks:
      # Connect to the 'traefik_proxy' overlay network for inter-container communication across nodes
