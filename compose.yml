@@ -1,7 +1,6 @@
 services:
   traefik:
     image: traefik:v3.7
-    container_name: traefik
     restart: unless-stopped
     security_opt:
       - apparmor:unconfined
@@ -14,6 +13,7 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro,z
+      - /home/user/certs:/certs:ro
     command:
       # EntryPoints
       - "--entrypoints.web.address=:80"
@@ -58,8 +58,9 @@ networks:
     name: proxy
 
 configs:
-  traefik_config: |
-    tls:
-      certificates:
-        - certFile: /home/user/certs/local.crt
-          keyFile:  /home/user/certs/local.key
+  traefik_tls_config: 
+    content: |
+      tls:
+        certificates:
+          - certFile: /certs/local.crt
+            keyFile:  /certs/local.key
